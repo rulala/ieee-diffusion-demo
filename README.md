@@ -21,40 +21,41 @@ This repository contains two tracks:
 ## Repository layout
 
 ```text
-ieee-diffusion-workshop/
+ieee-diffusion-demo/
+├── archive/
+├── data/
+│   ├── raw/
+│   ├── interim/
+│   └── processed/
 ├── notebooks/
 │   ├── aps/
 │   │   ├── 01_DataExploration_Preprocessing_TUTORIAL.ipynb
 │   │   ├── 02_Failure_Clustering_TUTORIAL.ipynb
 │   │   ├── 03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb
 │   │   └── 04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb
-│   └── rag/
+│   └── agentic-search/
 │       ├── 90_Llama_RAG_WebURL_TUTORIAL.ipynb
 │       ├── 90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb
 │       └── 91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── vectorstores/
-├── docs/
-│   └── report/
-├── figures/
-├── src/
-│   ├── common/
-│   └── rag/
+├── outputs/
+│   ├── figures/
+│   ├── models/
+│   └── tables/
+├── report/
 ├── .env.example
+├── .gitattributes
 ├── .gitignore
+├── LOCAL_UPDATE_NOTES.md
 ├── README.md
 └── requirements.txt
-```
 
 ---
 
 ## What to clone
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/ieee-diffusion-workshop.git
-cd ieee-diffusion-workshop
+git clone https://github.com/rulala/ieee-diffusion-demo.git
+cd ieee-diffusion-demo
 ```
 
 If you are starting from the original repo instead:
@@ -118,10 +119,10 @@ The APS notebooks are already patched to read from `data/raw/` and write process
 3. `notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb`
 4. `notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb`
 
-### RAG notebooks
-5. `notebooks/rag/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
-6. `notebooks/rag/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
-7. `notebooks/rag/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
+### Agentic-search notebooks
+5. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
+6. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
+7. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
 
 ---
 
