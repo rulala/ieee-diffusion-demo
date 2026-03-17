@@ -141,22 +141,16 @@ A starter template is included as `.env.example`.
 ## Notes
 
 - data/raw/ holds original APS data.
-
 - data/interim/ holds local intermediate files.
-
 - data/processed/ holds processed and experiment-ready data artifacts.
-
 - outputs/figures/ and outputs/tables/ contain the main demo results used in the report.
-
-report/ contains the workshop writeup and report assets.
+- report/ contains the workshop writeup and report assets.
 ---
 
 ## Suggested next cleanup steps
 
 - rename the Llama_RAG... notebook filenames so they consistently say Agentic_Search
-
 - add a short results section with figures from outputs/figures/
-
 - add a report summary section that references report/
 
 ## For any help or to run this workshop contact:
