@@ -1,5 +1,7 @@
 # IEEE Diffusion Demo
 
+# IEEE Diffusion Demo
+
 IEEE Diffusion Demo is a hands-on workshop repository with two complementary tracks:
 
 1. **APS Failure Prediction with Diffusion Augmentation**
@@ -16,7 +18,7 @@ IEEE Diffusion Demo is a hands-on workshop repository with two complementary tra
 
 ---
 
-## Repository layout
+## Repository Layout
 
 ```text
 ieee-diffusion-demo/
@@ -48,117 +50,119 @@ ieee-diffusion-demo/
 └── requirements.txt
 
 
-## What to clone
+## Getting Started
 
+### What to Clone
+
+```bash
 git clone https://github.com/rulala/ieee-diffusion-demo.git
 cd ieee-diffusion-demo
+```
 
-##Set up a virtual environment
+### Set Up a Virtual Environment
 
+```bash
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate
+```
 
-## Install dependencies
+**Windows:**
 
+```bash
+.venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
 pip install firecrawl-py python-dotenv
+```
+
+### Launch Jupyter
+
+```bash
 jupyter notebook
+```
 
-#Ollama setup for the agentic-search notebooks
+## Ollama Setup for the Agentic-Search Notebooks
 
-**Start Ollama locally:
+Start Ollama locally:
 
+```bash
 ollama serve
 ollama pull llama3
 ollama pull nomic-embed-text
-APS dataset placement
+```
+
+## APS Dataset Placement
 
 Place the APS files here:
 
+```text
 data/raw/aps_failure_training_set.csv
 data/raw/aps_failure_test_set.csv
 data/raw/aps_failure_description.txt
+```
 
-The preprocessing workflow writes intermediate files to data/interim/ and processed experiment files to data/processed/.
+The preprocessing workflow writes intermediate files to `data/interim/` and processed experiment files to `data/processed/`.
 
-Recommended run order
-APS notebooks
+## Recommended Run Order
 
-notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb
+### APS Notebooks
 
-notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb (optional)
+1. `notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb`
+2. `notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb` *(optional)*
+3. `notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb`
+4. `notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb`
 
-notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb
+### Agentic-Search Notebooks
 
-notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb
+1. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
+2. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
+3. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
 
-Agentic-search notebooks
+## Firecrawl Setup
 
-notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb
+Create a `.env` file in the repo root:
 
-notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb
-
-notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb
-
-Firecrawl setup
-
-Create a .env file in the repo root:
-
+```env
 FIRECRAWL_API_KEY=your_api_key_here
+```
 
-A starter template is included as .env.example.
+A starter template is included as `.env.example`.
 
-Notes
+## Notes
 
-data/raw/ holds the original APS data.
+- `data/raw/` holds the original APS data.
+- `data/interim/` holds intermediate local files.
+- `data/processed/` holds processed and experiment-ready data artifacts.
+- `outputs/figures/` and `outputs/tables/` contain the main demo results used in the report.
+- `report/` contains the workshop writeup and report assets.
 
-data/interim/ holds intermediate local files.
-
-data/processed/ holds processed and experiment-ready data artifacts.
-
-outputs/figures/ and outputs/tables/ contain the main demo results used in the report.
-
-report/ contains the workshop writeup and report assets.
-
-Workshop goal
+## Workshop Goal
 
 This project demonstrates how to generate synthetic failure-class data from an imbalanced APS dataset using diffusion, then use those generated failure examples to train a classifier and compare its performance against a simple baseline.
 
 The main demo story is:
 
-failure examples are rare
+- failure examples are rare
+- rare failure data make classification difficult
+- generating additional synthetic failure examples can improve a simple classifier
+- diffusion provides one way to create those minority-class examples
 
-rare failure data make classification difficult
-
-generating additional synthetic failure examples can improve a simple classifier
-
-diffusion provides one way to create those minority-class examples
-
-Demo comparison
+## Demo Comparison
 
 The main APS demo compares:
 
-Baseline: Logistic Regression trained on the original imbalanced APS training data
-
-Improved model: Logistic Regression trained on APS data augmented with a small number of diffusion-generated failure examples
+- **Baseline:** Logistic Regression trained on the original imbalanced APS training data
+- **Improved model:** Logistic Regression trained on APS data augmented with a small number of diffusion-generated failure examples
 
 This repository is intended as a workshop/demo pipeline rather than a claim of state-of-the-art benchmark performance.
 
-Suggested next cleanup steps
+## Contact
 
-rename the Llama_RAG... notebook filenames so they consistently say Agentic_Search
+For any help or to run this workshop, contact:
 
-add a short results section with figures from outputs/figures/
-
-add a report summary section that references report/
-
-
-Then run:
-
-```bash
-git add README.md
-git commit -m "Update README to match current repo structure"
-git push origin main
-
-## For any help or to run this workshop contact:
-rula@womeninai.co OR mona jaber
+- `rula@womeninai.co`
+- Mona Jaber
