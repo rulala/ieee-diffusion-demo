@@ -1,6 +1,8 @@
 # IEEE Diffusion Demo
 
-IEEE Diffusion Demo is a hands-on workshop repository with two complementary tracks:
+IEEE Diffusion Workshop is a hands-on workshop repository that combines diffusion-based augmentation for imbalanced APS failure prediction with a local agentic web search pipeline built on Ollama, Chroma, seed-URL indexing, and optional Firecrawl integration.
+
+This is a hands-on workshop repository with two complementary tracks:
 
 1. **APS Failure Prediction with Diffusion Augmentation**
    - preprocessing
