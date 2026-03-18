@@ -1,6 +1,3 @@
-# IEEE Diffusion Workshop
-
-
 # IEEE Diffusion Demo
 
 IEEE Diffusion Demo is a hands-on workshop repository with two complementary tracks:
@@ -49,19 +46,27 @@ ieee-diffusion-demo/
 ├── LOCAL_UPDATE_NOTES.md
 ├── README.md
 └── requirements.txt
-What to clone
+
+
+## What to clone
+
 git clone https://github.com/rulala/ieee-diffusion-demo.git
 cd ieee-diffusion-demo
-Set up a virtual environment
+
+##Set up a virtual environment
+
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-Install dependencies
+
+## Install dependencies
+
 pip install -r requirements.txt
 pip install firecrawl-py python-dotenv
 jupyter notebook
-Ollama setup for the agentic-search notebooks
 
-Start Ollama locally:
+#Ollama setup for the agentic-search notebooks
+
+**Start Ollama locally:
 
 ollama serve
 ollama pull llama3
