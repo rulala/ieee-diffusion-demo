@@ -1,7 +1,5 @@
 # IEEE Diffusion Demo
 
-# IEEE Diffusion Demo
-
 IEEE Diffusion Demo is a hands-on workshop repository with two complementary tracks:
 
 1. **APS Failure Prediction with Diffusion Augmentation**
