@@ -1,8 +1,9 @@
 # IEEE Diffusion Workshop
 
-IEEE Diffusion Workshop is a hands-on workshop repository that combines diffusion-based augmentation for imbalanced APS failure prediction with a local agentic web search pipeline built on Ollama, Chroma, seed-URL indexing, and optional Firecrawl integration.
 
-This repository contains two tracks:
+# IEEE Diffusion Demo
+
+IEEE Diffusion Demo is a hands-on workshop repository with two complementary tracks:
 
 1. **APS Failure Prediction with Diffusion Augmentation**
    - preprocessing
@@ -14,7 +15,7 @@ This repository contains two tracks:
    - Ollama + Chroma local retrieval
    - seed-URL indexing
    - agentic web expansion
-   - optional **Firecrawl** integration
+   - optional Firecrawl integration
 
 ---
 
@@ -48,110 +49,111 @@ ieee-diffusion-demo/
 ├── LOCAL_UPDATE_NOTES.md
 ├── README.md
 └── requirements.txt
-
----
-
-## What to clone
-
-```bash
+What to clone
 git clone https://github.com/rulala/ieee-diffusion-demo.git
 cd ieee-diffusion-demo
-```
-
-If you are starting from the original repo instead:
-
-```bash
-git clone https://github.com/rulala/IEEE_Diffusion_Workshop.git ieee-diffusion-workshop
-cd ieee-diffusion-workshop
-```
-
----
-
-## Set up a virtual environment
-
-```bash
+Set up a virtual environment
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-```
-
----
-
-## Install dependencies
-
-```bash
+Install dependencies
 pip install -r requirements.txt
 pip install firecrawl-py python-dotenv
 jupyter notebook
-```
-
----
-
-## Ollama setup for the RAG notebooks
+Ollama setup for the agentic-search notebooks
 
 Start Ollama locally:
 
-```bash
 ollama serve
 ollama pull llama3
 ollama pull nomic-embed-text
-```
+APS dataset placement
 
----
+Place the APS files here:
 
-## APS dataset placement
-
-Place the raw APS CSV files here:
-
-```text
 data/raw/aps_failure_training_set.csv
 data/raw/aps_failure_test_set.csv
-```
+data/raw/aps_failure_description.txt
 
-The APS notebooks are already patched to read from `data/raw/` and write processed outputs to `data/processed/`.
+The preprocessing workflow writes intermediate files to data/interim/ and processed experiment files to data/processed/.
 
----
+Recommended run order
+APS notebooks
 
-## Recommended run order
+notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb
 
-### APS notebooks
-1. `notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb`
-2. `notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb` *(optional)*
-3. `notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb`
-4. `notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb`
+notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb (optional)
 
-### Agentic-search notebooks
-5. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
-6. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
-7. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
+notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb
 
----
+notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb
 
-## Firecrawl setup
+Agentic-search notebooks
 
-Create a `.env` file in the repo root:
+notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb
 
-```env
+notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb
+
+notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb
+
+Firecrawl setup
+
+Create a .env file in the repo root:
+
 FIRECRAWL_API_KEY=your_api_key_here
-```
 
-A starter template is included as `.env.example`.
+A starter template is included as .env.example.
 
----
+Notes
 
-## Notes
+data/raw/ holds the original APS data.
 
-- data/raw/ holds original APS data.
-- data/interim/ holds local intermediate files.
-- data/processed/ holds processed and experiment-ready data artifacts.
-- outputs/figures/ and outputs/tables/ contain the main demo results used in the report.
-- report/ contains the workshop writeup and report assets.
----
+data/interim/ holds intermediate local files.
 
-## Suggested next cleanup steps
+data/processed/ holds processed and experiment-ready data artifacts.
 
-- rename the Llama_RAG... notebook filenames so they consistently say Agentic_Search
-- add a short results section with figures from outputs/figures/
-- add a report summary section that references report/
+outputs/figures/ and outputs/tables/ contain the main demo results used in the report.
+
+report/ contains the workshop writeup and report assets.
+
+Workshop goal
+
+This project demonstrates how to generate synthetic failure-class data from an imbalanced APS dataset using diffusion, then use those generated failure examples to train a classifier and compare its performance against a simple baseline.
+
+The main demo story is:
+
+failure examples are rare
+
+rare failure data make classification difficult
+
+generating additional synthetic failure examples can improve a simple classifier
+
+diffusion provides one way to create those minority-class examples
+
+Demo comparison
+
+The main APS demo compares:
+
+Baseline: Logistic Regression trained on the original imbalanced APS training data
+
+Improved model: Logistic Regression trained on APS data augmented with a small number of diffusion-generated failure examples
+
+This repository is intended as a workshop/demo pipeline rather than a claim of state-of-the-art benchmark performance.
+
+Suggested next cleanup steps
+
+rename the Llama_RAG... notebook filenames so they consistently say Agentic_Search
+
+add a short results section with figures from outputs/figures/
+
+add a report summary section that references report/
+
+
+Then run:
+
+```bash
+git add README.md
+git commit -m "Update README to match current repo structure"
+git push origin main
 
 ## For any help or to run this workshop contact:
 rula@womeninai.co OR mona jaber
