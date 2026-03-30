@@ -11,14 +11,14 @@ chromadb
 langchain-community
 langchain-text-splitters
 langchain-chroma
-# Web loading + agentic search + UI
+
+# Firecrawl-only web retrieval + UI
 beautifulsoup4
 requests
-trafilatura
-duckduckgo-search
 gradio
-# Notebook runtime (optional but nice for fresh machines)
-jupyter
-ipykernel
 firecrawl-py
 python-dotenv
+
+# Notebook runtime
+jupyter
+ipykernel
