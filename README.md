@@ -258,4 +258,5 @@ For the stable naming scheme, see `docs/OUTPUT_CONVENTIONS.md`.
 ## Contact
 
 For workshop-related questions:
-- `rula@womeninai.co`
+- Rula Awad rula@womeninai.co / rula.awad@gmail.com
+- Mona Jaber m.jaber@qmul.ac.uk
