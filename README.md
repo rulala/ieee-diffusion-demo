@@ -164,5 +164,5 @@ This repository is intended as a workshop/demo pipeline rather than a claim of s
 
 For any help or to run this workshop, contact:
 
-- `rula@womeninai.co`
-- Mona Jaber
+- Rula Awad `rula@womeninai.co`/ rula.awad@gmail.com
+- Mona Jaber / m.jaber@qmul.ac.uk 
