@@ -1,101 +1,116 @@
 # IEEE Diffusion Demo
 
-IEEE Diffusion Workshop is a hands-on workshop repository that combines diffusion-based augmentation for imbalanced APS failure prediction with a local agentic web search pipeline built on Ollama, Chroma, seed-URL indexing, and optional Firecrawl integration.
+A workshop-first repository for two applied AI case studies in transport:
 
-This is a hands-on workshop repository with two complementary tracks:
+1. **Case Study I — APS failure prediction with diffusion-based minority augmentation**
+2. **Case Study II — Firecrawl-only RAG and agentic web expansion with local LLaMA models**
 
-1. **APS Failure Prediction with Diffusion Augmentation**
-   - preprocessing
-   - optional failure clustering
-   - diffusion-based minority augmentation
-   - cost-sensitive evaluation
+This repo is designed as a **baseline workshop artifact**, not a state-of-the-art benchmark claim. The emphasis is on end-to-end reasoning, controlled comparisons, and reproducible notebook workflows.
 
-2. **Agentic Web Search**
-   - Ollama + Chroma local retrieval
-   - seed-URL indexing
-   - agentic web expansion
-   - optional Firecrawl integration
+## What is in scope
 
----
+### APS workflow
+- raw APS CSV ingestion and cleanup
+- missing-value handling, scaling, and PCA
+- failure clustering as a diagnostic step
+- diffusion-based minority augmentation in PCA space
+- cost-sensitive evaluation with threshold moving
 
-## Repository Layout
+### RAG workflow
+- baseline URL-grounded RAG using **Firecrawl scrape**
+- Firecrawl-only agentic expansion when local retrieval is too thin
+- local inference with **Ollama**
+- local vector retrieval with **Chroma**
 
-```text
-ieee-diffusion-demo/
-├── archive/
-├── data/
-│   ├── raw/
-│   ├── interim/
-│   └── processed/
-├── notebooks/
-│   ├── aps/
-│   │   ├── 01_DataExploration_Preprocessing_TUTORIAL.ipynb
-│   │   ├── 02_Failure_Clustering_TUTORIAL.ipynb
-│   │   ├── 03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb
-│   │   └── 04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb
-│   └── agentic-search/
-│       ├── 90_Llama_RAG_WebURL_TUTORIAL.ipynb
-│       ├── 90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb
-│       └── 91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb
-├── outputs/
-│   ├── figures/
-│   ├── models/
-│   └── tables/
-├── report/
-├── .env.example
-├── .gitattributes
-├── .gitignore
-├── LOCAL_UPDATE_NOTES.md
-├── README.md
-└── requirements.txt
+## Start here
 
-
-## Getting Started
-
-### What to Clone
+### 1) Clone the repo
 
 ```bash
 git clone https://github.com/rulala/ieee-diffusion-demo.git
 cd ieee-diffusion-demo
 ```
 
-### Set Up a Virtual Environment
+### 2) Create and activate a virtual environment
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-**Windows:**
+Windows:
 
 ```bash
 .venv\Scripts\activate
 ```
 
-### Install Dependencies
+### 3) Install dependencies
 
 ```bash
 pip install -r requirements.txt
-pip install firecrawl-py python-dotenv
 ```
 
-### Launch Jupyter
+### 4) Create your local environment file
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set your Firecrawl key.
+
+### 5) Set up Ollama
+
+In one terminal:
+
+```bash
+ollama serve
+```
+
+Then pull the required local models:
+
+```bash
+ollama pull llama3
+ollama pull nomic-embed-text
+```
+
+### 6) Run the setup check
+
+```bash
+python scripts/check_setup.py
+```
+
+### 7) Launch Jupyter
 
 ```bash
 jupyter notebook
 ```
 
-## Ollama Setup for the Agentic-Search Notebooks
+## Recommended notebook paths
 
-Start Ollama locally:
+### Workshop path A — APS predictive maintenance
 
-```bash
-ollama serve
-ollama pull llama3
-ollama pull nomic-embed-text
-```
+Run in this order:
 
-## APS Dataset Placement
+1. `notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb`
+2. `notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb`
+3. `notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb`
+4. `notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb`
+
+Use this path if you want the full rare-event classification workflow from raw APS files through cost-sensitive evaluation.
+
+### Workshop path B — Firecrawl-only RAG
+
+Run in this order:
+
+1. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
+2. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
+3. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
+
+Use this path if you want the grounded-answering workflow from a single scraped URL to Firecrawl-powered agentic expansion.
+
+## Required local assets
+
+### APS data
 
 Place the APS files here:
 
@@ -105,64 +120,86 @@ data/raw/aps_failure_test_set.csv
 data/raw/aps_failure_description.txt
 ```
 
-The preprocessing workflow writes intermediate files to `data/interim/` and processed experiment files to `data/processed/`.
+These raw files are ignored by Git and should stay local.
 
-## Recommended Run Order
+### Firecrawl
 
-### APS Notebooks
-
-1. `notebooks/aps/01_DataExploration_Preprocessing_TUTORIAL.ipynb`
-2. `notebooks/aps/02_Failure_Clustering_TUTORIAL.ipynb` *(optional)*
-3. `notebooks/aps/03_Diffusion_Minority_Augmentation_TUTORIAL.ipynb`
-4. `notebooks/aps/04_Cost_Sensitive_Evaluation_TUTORIAL.ipynb`
-
-### Agentic-Search Notebooks
-
-1. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL.ipynb`
-2. `notebooks/agentic-search/90_Llama_RAG_WebURL_TUTORIAL_AGENTIC.ipynb`
-3. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
-
-## Firecrawl Setup
-
-Create a `.env` file in the repo root:
+The RAG notebooks expect:
 
 ```env
-FIRECRAWL_API_KEY=your_api_key_here
+FIRECRAWL_API_KEY=fc-REPLACE_ME
 ```
 
-A starter template is included as `.env.example`.
+stored in `.env` at the repo root or in your shell environment.
 
-## Notes
+## Repository layout
 
-- `data/raw/` holds the original APS data.
-- `data/interim/` holds intermediate local files.
-- `data/processed/` holds processed and experiment-ready data artifacts.
-- `outputs/figures/` and `outputs/tables/` contain the main demo results used in the report.
-- `report/` contains the workshop writeup and report assets.
+```text
+ieee-diffusion-demo/
+├── archive/
+├── data/
+│   ├── raw/
+│   ├── interim/
+│   ├── processed/
+│   └── vectorstores/
+├── docs/
+├── notebooks/
+│   ├── aps/
+│   ├── agentic-search/
+│   └── README.md
+├── outputs/
+│   ├── figures/
+│   ├── models/
+│   └── tables/
+├── report/
+├── scripts/
+│   └── check_setup.py
+├── .env.example
+├── .gitignore
+├── README.md
+├── README_FIRECRAWL_ONLY.md
+└── requirements.txt
+```
 
-## Workshop Goal
+## Output conventions
 
-This project demonstrates how to generate synthetic failure-class data from an imbalanced APS dataset using diffusion, then use those generated failure examples to train a classifier and compare its performance against a simple baseline.
+### APS notebooks
+- intermediate artifacts: `data/interim/`
+- processed experiment-ready data: `data/processed/`
+- report-ready figures/tables: `outputs/figures/`, `outputs/tables/`
+- model checkpoints: `outputs/models/`
 
-The main demo story is:
+### RAG notebooks
+- optional persisted Chroma store: `data/vectorstores/chroma_db/`
+- local screenshots or demo captures: save under `outputs/figures/` if you want to reference them in the report
 
-- failure examples are rare
-- rare failure data make classification difficult
-- generating additional synthetic failure examples can improve a simple classifier
-- diffusion provides one way to create those minority-class examples
+## Which notebook should I open first?
 
-## Demo Comparison
+- Want the workshop’s main predictive-maintenance story? Start with **APS notebook 01**.
+- Want the local LLaMA + retrieval demo? Start with **90_Llama_RAG_WebURL_TUTORIAL.ipynb**.
+- Want the most stable report companion? Read the report in `docs/` first, then follow the notebook order in `notebooks/README.md`.
 
-The main APS demo compares:
+## Reports and documentation
 
-- **Baseline:** Logistic Regression trained on the original imbalanced APS training data
-- **Improved model:** Logistic Regression trained on APS data augmented with a small number of diffusion-generated failure examples
+- Main workshop baseline report: see `docs/`
+- Notebook map and run guidance: see `notebooks/README.md`
+- Firecrawl-only migration note: see `README_FIRECRAWL_ONLY.md`
 
-This repository is intended as a workshop/demo pipeline rather than a claim of state-of-the-art benchmark performance.
+## Troubleshooting quick hits
+
+- If APS CSV columns look wrong, check `skiprows=20`.
+- If missingness appears to be zero, confirm the string `"na"` was converted to real `NaN` values.
+- If diffusion training diverges, reduce learning rate, increase batch size, or stay in PCA space.
+- If the RAG notebooks retrieve weak context, adjust chunk size, chunk overlap, and top-k.
+- If the RAG answer is unsupported, strengthen the refusal rule and inspect the retrieved chunks.
+
+## Notes on reproducibility
+
+- This repo favors **clear teaching flow** over maximal abstraction.
+- Generated local artifacts such as APS checkpoints, timestamped CSVs, and persisted vectorstores should usually stay out of version control.
+- The report documents the workshop baseline faithfully, but some RAG sections are architecture-led rather than screenshot-led unless local run artifacts have been captured.
 
 ## Contact
 
-For any help or to run this workshop, contact:
-
-- Rula Awad `rula@womeninai.co`/ rula.awad@gmail.com
-- Mona Jaber / m.jaber@qmul.ac.uk 
+For workshop-related questions:
+- `rula@womeninai.co`
