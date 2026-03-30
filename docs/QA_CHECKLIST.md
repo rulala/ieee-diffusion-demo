@@ -25,6 +25,8 @@ Use this before sending the repo/report out.
 - [ ] `README.md` matches the actual notebook names and run order.
 - [ ] `notebooks/README.md` matches the current notebook set.
 - [ ] The stabilized report matches the repo naming and Firecrawl-only RAG story.
+- [ ] The cost-sensitive APS framing appears early enough that the repo does not read like a generic accuracy demo.
+- [ ] The practical diffusion and grounding explanations are understandable to non-specialist transport readers.
 - [ ] There is no leftover DuckDuckGo/Trafilatura wording in the main docs if the repo is now Firecrawl-only.
 - [ ] `python scripts/check_setup.py` passes locally.
 - [ ] `python scripts/release_smoke_checks.py` passes locally.

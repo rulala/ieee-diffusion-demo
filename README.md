@@ -7,20 +7,33 @@ A workshop-first repository for two applied AI case studies in transport:
 
 This repo is designed as a **baseline workshop artifact**, not a state-of-the-art benchmark claim. The emphasis is on end-to-end reasoning, controlled comparisons, and reproducible notebook workflows.
 
-## What is in scope
+## Why this workshop is framed differently
 
-### APS workflow
-- raw APS CSV ingestion and cleanup
-- missing-value handling, scaling, and PCA
-- failure clustering as a diagnostic step
-- diffusion-based minority augmentation in PCA space
-- cost-sensitive evaluation with threshold moving
+### For data scientists
+This is **not** a generic accuracy benchmark. APS failure prediction is a high-stakes, cost-sensitive ITS problem, so the workshop de-emphasizes raw accuracy and anchors the task with the operational cost function:
 
-### RAG workflow
-- baseline URL-grounded RAG using **Firecrawl scrape**
-- Firecrawl-only agentic expansion when local retrieval is too thin
-- local inference with **Ollama**
-- local vector retrieval with **Chroma**
+```text
+Cost = 10 x FP + 500 x FN
+```
+
+In fleet operations, missing a true failure is far more expensive than triggering an unnecessary maintenance check. That is also why diffusion appears here: the rare events with the highest safety and operational impact are often the hardest to collect at scale, so generative methods are explored as a practical way to expand minority coverage.
+
+### For transport engineers
+The technical story is kept practical. The diffusion model learns to reverse a gradual noising process on real failure vectors so it can generate additional plausible failures for downstream training; the goal is **not** a perfectly balanced dataset, but better coverage of minority cases. The RAG notebooks make the LLM side concrete too: a language model can sound plausible while being wrong, so grounding shifts the task from "answer from memory" to "answer from retrieved evidence" such as safety bulletins, operating procedures, incident reports, and maintenance manuals.
+
+## Workshop path vs advanced path
+
+### Workshop path
+Use this if you want the clean, shareable baseline:
+- APS notebooks 01 -> 04
+- Firecrawl RAG notebooks 90 -> 91
+- stabilized workshop report in `docs/`
+
+### Advanced path
+Potential follow-on work is intentionally parked in:
+- `docs/ADVANCED_RESEARCH_DIRECTIONS.md`
+
+That keeps the current release compact and easy to teach while preserving a clear paper-track roadmap.
 
 ## Start here
 
@@ -32,6 +45,8 @@ cd ieee-diffusion-demo
 ```
 
 ### 2) Create and activate a virtual environment
+
+**Recommended Python:** 3.10 or 3.11
 
 ```bash
 python -m venv .venv
@@ -85,6 +100,31 @@ python scripts/check_setup.py
 jupyter notebook
 ```
 
+## Optional quick demo UI
+
+If you want a lightweight demo surface for the RAG/search side without opening notebooks first, run:
+
+```bash
+python ui/search_demo.py
+```
+
+The tiny Gradio UI lets people:
+- ask a question
+- choose **Seed URL RAG**, **Firecrawl web search**, or **both**
+- inspect the grounded answer
+- inspect source URLs
+- inspect retrieved chunks
+
+This UI is intentionally small. It does **not** replace the notebooks and it does not train models.
+
+## Setup at a glance
+
+- **Internet required:** Firecrawl RAG notebooks only
+- **Local only:** APS notebooks after the APS data is present; Ollama inference is local
+- **Firecrawl key location:** `.env` at the repo root
+- **Models expected locally:** `llama3`, `nomic-embed-text`
+- **Best first run:** APS notebook 01 or RAG notebook 90, depending on which case study you want first
+
 ## Recommended notebook paths
 
 ### Workshop path A — APS predictive maintenance
@@ -107,6 +147,18 @@ Run in this order:
 3. `notebooks/agentic-search/91_Llama_RAG_Firecrawl_TUTORIAL_AGENTIC.ipynb`
 
 Use this path if you want the grounded-answering workflow from a single scraped URL to Firecrawl-powered agentic expansion.
+
+## Typical runtime expectations
+
+### APS notebooks
+- preprocessing + PCA: ~5-15 min code runtime
+- failure clustering: ~3-10 min
+- diffusion augmentation: ~10-25 min
+- cost-sensitive evaluation: ~5-15 min
+
+### Firecrawl RAG notebooks
+- baseline URL RAG: usually quickest to start
+- agentic variants: runtime depends on web retrieval, Firecrawl responses, and Ollama speed
 
 ## Required local assets
 
@@ -153,7 +205,12 @@ ieee-diffusion-demo/
 │   └── tables/
 ├── report/
 ├── scripts/
-│   └── check_setup.py
+│   ├── check_setup.py
+│   ├── apply_notebook_release_polish.py
+│   └── release_smoke_checks.py
+├── ui/
+│   ├── search_demo.py
+│   └── README.md
 ├── .env.example
 ├── .gitignore
 ├── README.md
@@ -173,17 +230,16 @@ ieee-diffusion-demo/
 - optional persisted Chroma store: `data/vectorstores/chroma_db/`
 - local screenshots or demo captures: save under `outputs/figures/` if you want to reference them in the report
 
-## Which notebook should I open first?
-
-- Want the workshop’s main predictive-maintenance story? Start with **APS notebook 01**.
-- Want the local LLaMA + retrieval demo? Start with **90_Llama_RAG_WebURL_TUTORIAL.ipynb**.
-- Want the most stable report companion? Read the report in `docs/` first, then follow the notebook order in `notebooks/README.md`.
+For the stable naming scheme, see `docs/OUTPUT_CONVENTIONS.md`.
 
 ## Reports and documentation
 
-- Main workshop baseline report: see `docs/`
-- Notebook map and run guidance: see `notebooks/README.md`
+- main workshop baseline report: see `docs/`
+- notebook map and run guidance: see `notebooks/README.md`
 - Firecrawl-only migration note: see `README_FIRECRAWL_ONLY.md`
+- parked future work: see `docs/ADVANCED_RESEARCH_DIRECTIONS.md`
+- send-out checks: see `docs/SENDOUT_CHECKLIST.md`
+- optional tiny Gradio demo: see `ui/README.md`
 
 ## Troubleshooting quick hits
 
