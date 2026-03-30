@@ -4,12 +4,12 @@ This repo uses a simple stable output layout so workshop users can find the gene
 
 ## Directory layout
 
-- `data/raw/` — user-supplied raw APS files
-- `data/processed/` — cleaned / imputed / PCA outputs
-- `outputs/figures/` — exported figures used in the report or QA
-- `outputs/tables/` — CSV outputs and experiment tables
-- `outputs/models/` — model checkpoints
-- `outputs/vectorstores/` — local Chroma persistence (keep ignored by Git)
+- `data/raw/` - user-supplied raw APS files
+- `data/processed/` - cleaned / imputed / PCA outputs
+- `outputs/figures/` - exported figures used in the report or QA
+- `outputs/tables/` - CSV outputs and experiment tables
+- `outputs/models/` - model checkpoints
+- `data/vectorstores/chroma_db/` - local Chroma persistence (keep ignored by Git)
 
 ## Stable baseline filenames
 

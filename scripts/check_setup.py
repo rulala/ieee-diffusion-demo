@@ -37,6 +37,15 @@ RED = "\033[91m"
 RESET = "\033[0m"
 
 
+def check_python_version() -> bool:
+    major, minor = sys.version_info[:2]
+    if (major, minor) < (3, 10):
+        print_status("Python", False, f"Python {major}.{minor} detected; use Python 3.10 or newer")
+        return False
+    print_status("Python", True, f"Python {major}.{minor} detected")
+    return True
+
+
 def print_status(label: str, ok: bool, message: str) -> None:
     color = GREEN if ok else RED
     state = "OK" if ok else "FAIL"
@@ -113,6 +122,7 @@ def check_repo_paths() -> None:
         ROOT / "notebooks" / "agentic-search",
         ROOT / "outputs",
         ROOT / "data",
+        ROOT / "ui",
     ]
     for path in expected:
         if path.exists():
@@ -131,6 +141,7 @@ def check_repo_paths() -> None:
 def main() -> int:
     print("IEEE Diffusion Demo — local setup check\n")
 
+    ok_python = check_python_version()
     ok_imports, missing = check_imports()
     if ok_imports:
         print_status("Python packages", True, "all required imports resolved")
@@ -141,7 +152,7 @@ def main() -> int:
     ok_ollama = check_ollama()
     check_repo_paths()
 
-    all_ok = ok_imports and ok_env and ok_ollama
+    all_ok = ok_python and ok_imports and ok_env and ok_ollama
     print()
     if all_ok:
         print(f"{GREEN}Setup looks good. You can move on to the notebooks.{RESET}")
