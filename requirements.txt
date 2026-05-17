@@ -5,6 +5,7 @@ matplotlib
 torch
 tqdm
 seaborn
+hdbscan
 
 # RAG / vector DB
 ollama
