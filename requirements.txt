@@ -4,6 +4,7 @@ scikit-learn
 matplotlib
 torch
 tqdm
+seaborn
 
 # RAG / vector DB
 ollama
